@@ -5,7 +5,7 @@ description: Prevent and diagnose command-line Unicode, non-ASCII, mojibake, pat
 
 # CLI Unicode Encoding
 
-Use the repository root `AGENT_SKILL.md` as the authority. Keep context small: load `references/troubleshooting.md` only for commands, SSH checks, symptom mapping, or path examples; load `references/legacy-encodings.md` only when UTF-8 does not explain the failure.
+Use `AGENT_SKILL.md` in this skill folder as the authority. Keep context small: load `references/troubleshooting.md` only for commands, SSH checks, symptom mapping, or path examples; load `references/legacy-encodings.md` only when UTF-8 does not explain the failure.
 
 ## Codex-specific rules
 
