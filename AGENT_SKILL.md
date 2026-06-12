@@ -1,6 +1,6 @@
 # CLI Unicode Encoding
 
-Use before CLI, SSH, file, subprocess, or path work may touch Unicode/non-ASCII text: CJK, accents, Cyrillic, Arabic, emoji, non-English paths, legacy files, remote commands, or cross-shell transfers. Prevent mojibake instead of reacting to it.
+Use automatically before CLI, SSH, file, subprocess, Git, search, or path work may touch Unicode/non-ASCII text: CJK, accents, Cyrillic, Arabic, emoji, non-English paths, legacy files, spaces/brackets/globs, remote commands, or cross-shell transfers. Prevent mojibake instead of reacting to it.
 
 **Tradeoff:** Bias toward diagnosis and reversible changes over fast global fixes.
 

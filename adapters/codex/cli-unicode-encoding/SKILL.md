@@ -1,6 +1,6 @@
 ---
 name: cli-unicode-encoding
-description: Prevent and diagnose command-line Unicode, non-ASCII, mojibake, path, filename, locale, SSH, code page, and legacy encoding problems across Windows, macOS, Linux, PowerShell, Git, Python, Node-style CLIs, ripgrep, and agent shell usage. Use before commands may touch CJK/accented/Cyrillic/Arabic/emoji text, non-English paths, SSH transfers, legacy files, or cross-shell text; also use when garbled text, question marks, escaped Git filenames, or failed Unicode searches already occurred.
+description: Prevent and diagnose CLI Unicode, non-ASCII, mojibake, locale, code page, path, filename, SSH, and legacy encoding problems. Automatically use before running shell commands, Git commands, Python/Node subprocesses, file reads/writes/searches, SSH/scp/sftp/rsync transfers, or cross-shell operations that may touch CJK, accented, Cyrillic, Arabic, emoji, non-English paths, spaces/brackets/globs, or legacy text files; also use after garbled text, question marks, escaped Git filenames, failed Unicode searches, or broken remote command output.
 ---
 
 # CLI Unicode Encoding
