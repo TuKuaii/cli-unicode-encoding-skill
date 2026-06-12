@@ -1,0 +1,4 @@
+interface:
+  display_name: "CLI Unicode Encoding"
+  short_description: "Diagnose CLI Unicode, locale, path, and legacy encoding failures."
+  default_prompt: "Diagnose this CLI Unicode or non-ASCII text problem. Check terminal, shell, runtime, file encoding, and path transport before changing code."
