@@ -43,6 +43,7 @@ Acceptance: common prevention should usually require the adapter plus `AGENT_SKI
 | SSH does not forward `LANG`/`LC_*` | Agent should not assume forwarding and should test remote locale | Prevents/diagnoses | `AGENT_SKILL.md` rule 5; troubleshooting SSH checks |
 | Complex SSH command has nested quotes and Unicode paths | Agent should prefer stdin script transfer | Prevents many failures | `references/troubleshooting.md` SSH boundary |
 | `scp` wildcard/glob with Unicode path fails | Agent should prefer SFTP-mode transfer and avoid legacy remote shell globbing | Prevents many failures | `references/troubleshooting.md` SSH file transfer notes |
+| Inline Python/Node script embeds a non-ASCII path and is piped through the shell | Agent should write a temporary script and pass paths as arguments or a UTF-8 argument file | Prevents many failures | `AGENT_SKILL.md` rule 6; troubleshooting inline script examples |
 | Terminal displays boxes | Agent should check font coverage, not only encoding | Diagnoses | `references/troubleshooting.md` symptom mapping |
 | Remote filenames are already mojibake | Agent should classify rename/transcode as S3 | Avoids unsafe fix | `AGENT_SKILL.md` rules 2 and 5 |
 | User asks for permanent environment changes | Agent should ask first for S2/S3 | Prevents unsafe persistence | `AGENT_SKILL.md` rule 2 |
@@ -79,6 +80,7 @@ Automated/local checks:
 2. Windows diagnostic script runs without persistent changes.
 3. Windows session UTF-8 script changes only the current PowerShell process.
 4. Windows scripts contain no non-ASCII string literals, so Windows PowerShell 5.1 can read them safely.
+5. Repository self-check script passes.
 
 Static checks:
 
@@ -111,6 +113,7 @@ Validated locally on Windows:
 - `scripts/diagnose-windows-powershell.ps1`: passed; reports PowerShell, console, Git, Python, and Unicode smoke test without persistent changes.
 - `scripts/windows-session-utf8.ps1`: passed; changes only current-session encodings and prints a Unicode smoke test.
 - Windows PowerShell scripts are ASCII-only: passed.
+- `scripts/check-repo.ps1`: passed.
 
 Measured current approximate token sizes:
 

@@ -28,6 +28,8 @@
 
 ```text
 AGENT_SKILL.md
+ACCEPTANCE.md
+LICENSE
 README.md
 references/
   troubleshooting.md
@@ -36,6 +38,8 @@ scripts/
   diagnose-windows-powershell.ps1
   windows-session-utf8.ps1
   diagnose-posix.sh
+  install-codex-skill.ps1
+  check-repo.ps1
 adapters/
   codex/
     cli-unicode-encoding/
@@ -189,17 +193,23 @@ references/troubleshooting.md
 references/legacy-encodings.md
 ```
 
-要求 Agent：遇到 CLI 乱码、Unicode 路径、非 UTF-8 文件、跨 shell 文本问题时，先读 `AGENT_SKILL.md`，再按需读 `references/`。
+要求 Agent：在运行可能碰到 CLI、SSH、Unicode 路径、非 UTF-8 文件或跨 shell 文本的命令前，先读 `AGENT_SKILL.md`，再按需读 `references/`。
 
 ### Codex
 
-把这个目录复制到 Codex skills 目录：
+推荐使用安装脚本创建自包含 skill：
 
-```text
-adapters/codex/cli-unicode-encoding
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-codex-skill.ps1 -Force
 ```
 
-如果只复制 adapter，请同时保留仓库根目录的 `AGENT_SKILL.md` 和 `references/`，或把它们放到项目文档中供 adapter 引用。
+安装后会生成：
+
+```text
+%USERPROFILE%\.codex\skills\cli-unicode-encoding
+```
+
+这个目录包含 Codex `SKILL.md`、`AGENT_SKILL.md`、`references/` 和 `scripts/`，不依赖仓库原始路径。
 
 ### Claude Code
 
@@ -213,7 +223,7 @@ adapters/codex/cli-unicode-encoding
 
 ```powershell
 cd '<path-to>\cli-unicode-encoding-skill'
-git add README.md AGENT_SKILL.md references adapters
+git add .
 git commit -m "Add universal CLI Unicode encoding skill"
 git branch -M main
 git remote add origin https://github.com/<your-name>/cli-unicode-encoding-skill.git
@@ -221,3 +231,9 @@ git push -u origin main
 ```
 
 建议发布前选择许可证，比如 MIT、Apache-2.0 或 CC BY 4.0。许可证是法律选择，这里不替你默认决定。
+
+## 发布前检查
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-repo.ps1
+```

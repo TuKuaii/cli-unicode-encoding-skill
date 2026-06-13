@@ -54,7 +54,7 @@ Check local shell/client and remote locale separately before sending Unicode-hea
 
 **Avoid shell strings for user paths.**
 
-Use argument arrays when available. On Windows PowerShell, use `-LiteralPath`. Avoid PowerShell-to-`cmd /c` handoffs for path-sensitive work. In Python, prefer `pathlib.Path`, explicit `encoding=`, and `subprocess.run([...])`.
+Use argument arrays when available. On Windows PowerShell, use `-LiteralPath`. Avoid PowerShell-to-`cmd /c` handoffs for path-sensitive work. Do not pipe inline scripts that embed non-ASCII paths; write a temporary script and pass paths as arguments instead. If the shell/locale boundary is uncertain, pass paths through a UTF-8 argument file. In Python, prefer `pathlib.Path`, explicit `encoding=`, and `subprocess.run([...])`.
 
 ## 7. Load Details Only When Needed
 

@@ -109,6 +109,54 @@ Avoid:
 subprocess.run(f'git add "{path}"', shell=True)
 ```
 
+## Inline scripts and pipes
+
+On Windows, piping inline scripts that contain non-ASCII literals or paths can cross a fragile encoding boundary. Avoid this pattern for path-sensitive checks:
+
+```powershell
+@'
+from pathlib import Path
+print(Path(r"D:\项目\[demo]\café.txt").exists())
+'@ | python -
+```
+
+Prefer a script file plus arguments:
+
+```powershell
+$script = Join-Path $env:TEMP 'unicode-check.py'
+@'
+from pathlib import Path
+import sys
+
+print(Path(sys.argv[1]).exists())
+'@ | Set-Content -LiteralPath $script -Encoding utf8
+python $script 'D:\项目\[demo]\café.txt'
+Remove-Item -LiteralPath $script
+```
+
+This keeps the path in the process argument boundary instead of embedding it inside script source sent through a pipe.
+
+If even command-line arguments may cross an unsafe shell/locale boundary, pass the path through a UTF-8 argument file:
+
+```powershell
+$pathFile = Join-Path $env:TEMP 'unicode-path.txt'
+$script = Join-Path $env:TEMP 'unicode-check.py'
+
+Set-Content -LiteralPath $pathFile -Value 'D:\项目\[demo]\café.txt' -Encoding utf8
+@'
+from pathlib import Path
+import sys
+
+path = Path(Path(sys.argv[1]).read_text(encoding="utf-8").strip())
+print(path.exists())
+'@ | Set-Content -LiteralPath $script -Encoding utf8
+
+python $script $pathFile
+Remove-Item -LiteralPath $script, $pathFile
+```
+
+This avoids embedding the non-ASCII path in script source and keeps the command argument ASCII-only.
+
 ## SSH boundary
 
 SSH adds at least two text environments: local shell/client and remote shell/program. Diagnose both sides.
